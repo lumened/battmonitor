@@ -1,0 +1,3 @@
+[submodule "apigpio"]
+	path = apigpio
+	url = https://github.com/lumened/apigpio.git
