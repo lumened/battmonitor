@@ -1,3 +1,6 @@
 [submodule "apigpio"]
 	path = apigpio
 	url = https://github.com/lumened/apigpio.git
+[submodule "adafruitlibs"]
+	path = adafruitlibs
+	url = https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code.git
