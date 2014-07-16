@@ -2,7 +2,7 @@
 
 
 import time
-import api_adc
+import api_adc, config
 import apigpio.api_gpio as api_gpio
 
 
@@ -23,27 +23,28 @@ def line_low_control():
     api_gpio.off_pin(21)
 
 def line_falling_control():
-    line_low()
+    line_low_control()
     time.sleep(0.10)
-    line_high()    
+    line_high_control()    
     
 
 # Charger Status
 
-def update_state:
+def update_state():
     '''
     This function inputs the LED state from the charger and interprets the result
     '''
     
     config.led_volt = api_adc.get_charger_value(sps=3300)
 
-    if led_volt<0.5: return config.state['off']
-    elif led_volt>1.0 and led_volt<1.5: return config.state['detected']
-    elif led_volt>2.3 and led_volt<2.6: return config.state['charging']
-    #elif led_volt>1.0 and led_volt<1.5: return config.state['full']
+    if config.led_volt<0.5: config.led_state = config.state['off']
+    elif config.led_volt>1.0 and config.led_volt<1.5: config.led_state = config.state['detected']
+    elif config.led_volt>2.3 and config.led_volt<2.6: config.led_state = config.state['charging']
+    elif config.led_volt>4.8: config.led_state = config.state['full']
     
+    return None
     
-    
+
 # Battery State
 
 def update_battery():
@@ -51,12 +52,13 @@ def update_battery():
     This function inputs the battery voltage and updates the shared file
     '''
 
-    config.bat_volt = api_adc.get_battery_value()
+    config.bat_volt = api_adc.get_battery_value()*3
     
-    bat_percent = 100*(bat_volt - config.bat_min)/(config.bat_max - config.bat_min)
+    bat_percent = 100*(config.bat_volt - config.bat_min)/(config.bat_max - config.bat_min)
     
     f = open('/home/pi/touch-flux/src/battmonitor/data.txt', "w")
-    f.write(bat_percent)
+    f.write(str(bat_percent))
+    if config.DEBUG: print(bat_percent)
     f.close()
 
     

@@ -39,4 +39,4 @@ def get_charger_value(gain=config.gain, sps=config.sps):
 
 
 #init()
-#get_charger_state(sps=3300)
+#print(get_charger_value(sps=3300))
