@@ -73,8 +73,10 @@ def main():
 
     while 1:
         #Run Invariants
-        api_charger.update_state()
-        api_charger.update_battery()
+        #api_charger.update_state()
+        api_charger.update_battery() #HAS TO RUN FIRST
+        api_charger.update_state() #HAS TO RUN SECOND
+
         #config.bat_volt = config.bat_volt*3
         
         

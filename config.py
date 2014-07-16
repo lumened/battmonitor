@@ -16,7 +16,7 @@ channel_charger = 1
 state = {'off':0, 'detected':1, 'charging':2, 'full':3}
 
 #Sleep Time
-delay = 1 #Seconds
+delay = 2 #Seconds
 
 #Lag between switching and output
 lag = 5 #Seconds
@@ -28,7 +28,7 @@ passive_discharge = 0x02 #Does not charge even if power is connected
 
 #Battery Range
 bat_min = 10.0
-bat_max = 12.60
+bat_max = 12.70
 
 # Variables
 bat_volt = 0

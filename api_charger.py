@@ -41,6 +41,11 @@ def update_state():
     elif config.led_volt>1.0 and config.led_volt<1.5: config.led_state = config.state['detected']
     elif config.led_volt>2.3 and config.led_volt<2.6: config.led_state = config.state['charging']
     elif config.led_volt>4.8: config.led_state = config.state['full']
+
+    f = open('/home/pi/touch-flux/src/battmonitor/data.txt', "a")
+    if config.led_state==config.state['off']: f.write('U')
+    else: f.write('P')
+    f.close()
     
     return None
     
@@ -57,8 +62,8 @@ def update_battery():
     bat_percent = 100*(config.bat_volt - config.bat_min)/(config.bat_max - config.bat_min)
     
     f = open('/home/pi/touch-flux/src/battmonitor/data.txt', "w")
-    f.write(str(bat_percent))
-    if config.DEBUG: print(bat_percent)
+    f.write("%.3d" % bat_percent)
+    if config.DEBUG: print(str(bat_percent)[0-2])
     f.close()
 
     
