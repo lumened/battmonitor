@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 # This is the main battery monitor daemon file
 
 import time
@@ -34,6 +36,9 @@ def handle_active_discharge():
     if api_charger.check_bat_volt_low():
         if config.DEBUG: print("Shutdown")
         #Attempt Shutdown
+        #Will be handled by Touch Flux
+        #from subprocess import call
+        #call(["sudo", "shutdown", "-h", "now"])
         config.system_state = config.active_discharge
         return None
 
@@ -74,8 +79,8 @@ def main():
     while 1:
         #Run Invariants
         #api_charger.update_state()
-        api_charger.update_battery() #HAS TO RUN FIRST
-        api_charger.update_state() #HAS TO RUN SECOND
+        api_charger.update_battery(True) #HAS TO RUN FIRST
+        api_charger.update_state(True) #HAS TO RUN SECOND
 
         #config.bat_volt = config.bat_volt*3
         
