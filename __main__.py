@@ -87,9 +87,9 @@ def main():
         
         old_state = config.system_state
         
-        print(config.led_volt)
-        print(config.bat_volt)
-        print(config.system_state)
+        print("LED"); print(config.led_volt)
+        print("Bat"); print(config.bat_volt)
+        print("State"); print(config.system_state)
 
         #Run state handlers
         if config.system_state == config.active_discharge: handle_active_discharge()

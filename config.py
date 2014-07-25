@@ -1,7 +1,7 @@
 # Constants
 
 #Developer
-DEBUG = True
+DEBUG = False
 
 #ADC
 ADS1015 = 0x00 # Address of the ADC
@@ -16,7 +16,7 @@ channel_charger = 1
 state = {'off':0, 'detected':1, 'charging':2, 'full':3}
 
 #Sleep Time
-delay = 10 #Seconds
+delay = 5 #Seconds
 
 #Lag between switching and output
 lag = 4 #Seconds

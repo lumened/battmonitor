@@ -62,6 +62,9 @@ def update_battery(write_to_file=False):
     
     bat_percent = 100*(config.bat_volt - config.bat_min)/(config.bat_max - config.bat_min)
     
+    if bat_percent<0 : bat_percent = 0
+    elif bat_percent>100 : bat_percent = 101
+
     if write_to_file:
         f = open('/home/pi/touch-flux/src/battmonitor/data.txt', "w")
         f.write("%.3d" % bat_percent)
