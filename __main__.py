@@ -20,7 +20,7 @@ def attempt_switch(target, attempts=4):
         api_charger.update_state()
         
     if count==attempts: 
-        print("Attempt to switch to " + target + " state failed. Will try again on next wakeup.")
+        if config.DEBUG: print("Attempt to switch to " + target + " state failed. Will try again on next wakeup.")
         return False #no state change
     return True
     
@@ -87,9 +87,9 @@ def main():
         
         old_state = config.system_state
         
-        print("LED"); print(config.led_volt)
-        print("Bat"); print(config.bat_volt)
-        print("State"); print(config.system_state)
+        if config.DEBUG: print("LED"); print(config.led_volt)
+        if config.DEBUG: print("Bat"); print(config.bat_volt)
+        if config.DEBUG: print("State"); print(config.system_state)
 
         #Run state handlers
         if config.system_state == config.active_discharge: handle_active_discharge()

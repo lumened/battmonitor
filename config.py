@@ -16,10 +16,10 @@ channel_charger = 1
 state = {'off':0, 'detected':1, 'charging':2, 'full':3}
 
 #Sleep Time
-delay = 5 #Seconds
+delay = 10 #Seconds
 
 #Lag between switching and output
-lag = 4 #Seconds
+lag = 2 #Seconds
 
 #System States
 active_discharge = 0x00 #Charges if power is connected

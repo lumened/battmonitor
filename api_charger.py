@@ -35,16 +35,19 @@ def update_state(write_to_file=False):
     This function inputs the LED state from the charger and interprets the result
     '''
     
-    config.led_volt = api_adc.get_charger_value(sps=3300)
+    config.led_volt = api_adc.get_charger_led_value()
 
-    if config.led_volt<0.5: config.led_state = config.state['off']
+    if config.led_volt<0.7: config.led_state = config.state['off']
     elif config.led_volt>1.0 and config.led_volt<1.5: config.led_state = config.state['detected']
-    elif config.led_volt>2.3 and config.led_volt<2.6: config.led_state = config.state['charging']
-    elif config.led_volt>4.8: config.led_state = config.state['full']
+    elif config.led_volt>2.3 and config.led_volt<2.8: config.led_state = config.state['charging']
+    elif config.led_volt>4.5 and config.led_volt<5.5: config.led_state = config.state['full']
+    # Madness 
+    # elif config.led_volt>5.5 : config.led_state = config.state['detected'] 
 
     if write_to_file:
         f = open('/home/pi/touch-flux/src/battmonitor/data.txt', "a")
         if config.led_state==config.state['off']: f.write('U')
+        elif config.led_state == config.state['charging']: f.write('C')
         else: f.write('P')
         f.close()
         
@@ -64,9 +67,13 @@ def update_battery(write_to_file=False):
     
     if bat_percent<0 : bat_percent = 0
     elif bat_percent>100 : bat_percent = 101
+    
 
     if write_to_file:
         f = open('/home/pi/touch-flux/src/battmonitor/data.txt', "w")
+#        if system_state == config.charging:
+#            f.write("CCC")    
+#        else:
         f.write("%.3d" % bat_percent)
         if config.DEBUG: print("%.3d" % bat_percent)
         f.close()
