@@ -16,7 +16,7 @@ channel_charger = 1
 state = {'off':0, 'detected':1, 'charging':2, 'full':3}
 
 #Sleep Time
-delay = 10 #Seconds
+delay = 30 #Seconds
 
 #Lag between switching and output
 lag = 2 #Seconds

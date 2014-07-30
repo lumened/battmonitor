@@ -54,7 +54,8 @@ def handle_passive_discharge():
 
 def handle_charging():
     
-    if api_charger.check_bat_volt_high() or config.led_state == config.state['full']:
+    #if api_charger.check_bat_volt_high() or config.led_state == config.state['full']:
+    if config.led_state == config.state['full']:
         if config.DEBUG: print("Stop charging")
         if attempt_switch('detected'): config.system_state = config.passive_discharge
         return None
@@ -83,7 +84,6 @@ def main():
         api_charger.update_state(True) #HAS TO RUN SECOND
 
         #config.bat_volt = config.bat_volt*3
-        
         
         old_state = config.system_state
         
