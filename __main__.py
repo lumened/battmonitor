@@ -28,7 +28,7 @@ def attempt_switch(target, attempts=4):
 
 def handle_active_discharge():
     
-    if config.led_state == config.state['detected']:
+    if config.led_state == config.state['detected'] and not get_pin(17):
         if config.DEBUG: print("Start charging")
         if attempt_switch('charging'): config.system_state = config.charging
         return None
@@ -61,14 +61,39 @@ def handle_charging():
         return None
         
     if config.led_state == config.state['detected']:
-        if config.DEBUG: print("Restart charging")
-        if attempt_switch('charging'): config.system_state = config.charging
+        if not get_pin(17):
+            if config.DEBUG: print("Restart charging")
+            if attempt_switch('charging'): config.system_state = config.charging
+        else:
+            if config.DEBUG: print("Projector on. ABORT! ABORT!")
+            if attempt_switch('detected'): config.system_state = config.active_discharge
         return None
     
     if config.led_state == config.state['off']:
         if config.DEBUG: print("Charger unplugged")
         config.system_state = config.active_discharge
         return None
+
+def get_pin(pin=17): #For the projector
+    '''                                                                             
+    Function to return current value of pin. Pin must be previously inititalized.    
+    Returns True if 1, False if 0.                                                  
+    '''
+    try:
+        path = '/sys/class/gpio/gpio' + str(pin) + '/value'
+        f = open(path,'r')
+        value = f.read(1)
+        f.close()
+        if value == '1': 
+            if config.DEBUG: print("Projector is ON")
+            return True
+        elif value == '0': 
+            if config.DEBUG: print("Projector is OFF")
+            return False
+    except:
+        if config.DEBUG: print("Error while reading projector")    
+        return False
+
 
 def main():
     

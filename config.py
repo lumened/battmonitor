@@ -1,7 +1,7 @@
 # Constants
 
 #Developer
-DEBUG = False
+DEBUG = True
 
 #ADC
 ADS1015 = 0x00 # Address of the ADC
